@@ -9,6 +9,31 @@
 #include <dt-bindings/zmk/bt.h>
 
 / {
+  macros {
+    shift_left: shift_left {
+      compatible = "zmk,behavior-macro";
+      #binding-cells = <0>;
+      bindings =
+        <&macro_press &kp RALT>,
+        <&macro_press &kp RCTRL>,
+        <&macro_tap &kp LEFT>,
+        <&macro_release &kp RALT>,
+        <&macro_release &kp RCTRL>;
+    };
+    shift_right: shift_right {
+      compatible = "zmk,behavior-macro";
+      #binding-cells = <0>;
+      bindings =
+        <&macro_press &kp RALT>,
+        <&macro_press &kp RCTRL>,
+        <&macro_tap &kp RIGHT>,
+        <&macro_release &kp RALT>,
+        <&macro_release &kp RCTRL>;
+    };
+  };
+};
+
+/ {
         keymap {
                 compatible = "zmk,keymap";
 
@@ -30,12 +55,12 @@
 // | TAB  |     | HME | UP  | END | PUP |   |     |     |     |     |     | DEL  |
 // | ESC  |     | LFT | DWN | RGT | PDN |   |BTCLR| BT1 | BT2 | BT3 | BT4 | BT5  |
 // | SHFT |     |     |     |     |     |   |     |     |     |     |     |      |
-//                    | CTL |     | SPC |   | ENT |     | ALT |
+//                    | CTL |     | SPC |   | -   |     | ALT |
                         bindings = <
    &kp TAB    &trans   &kp HOME   &kp UP     &kp END    &kp PAGE_UP    &trans     &trans       &trans       &trans       &trans       &kp DEL
    &kp ESC    &trans   &kp LEFT   &kp DOWN   &kp RIGHT  &kp PAGE_DOWN  &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4
    &kp LSHFT  &trans   &trans     &trans     &trans     &trans         &trans     &trans       &trans       &trans       &trans       &trans
-                                  &kp LCTRL  &trans     &kp SPACE      &kp RET    &trans       &kp RALT
+                                  &kp LCTRL  &trans     &kp SPACE      &kp MINUS    &trans       &kp RALT
                         >;
                 };
 
@@ -44,12 +69,12 @@
 // |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | DEL  |
 // | ESC  |     |  (  |  )  |     |     |   |  -  |  =  |  {  |  }  |  \  |  `   |
 // | SHFT |     |     |     |     |     |   |  _  |  +  |  [  |  ]  | "|" | SHFT |
-//                    | GUI |     | SPC |   | ENT |     | ALT |
+//                    | GUI |     | _   |   | ENT | SLT | SRT |
                         bindings = <
    &kp TAB   &kp N1   &kp N2   &kp N3   &kp N4   &kp N5      &kp N6    &kp N7    &kp N8    &kp N9   &kp N0   &kp DEL
    &kp ESC   &trans   &kp LPAR &kp RPAR &trans   &trans      &kp MINUS &kp EQUAL &kp LBRC  &kp RBRC &kp BSLH &kp GRAVE
    &kp LSHFT &trans   &trans   &trans   &trans   &trans      &kp UNDER &kp PLUS  &kp LBKT  &kp RBKT &kp PIPE &kp RSHFT
-                             &kp LGUI  &trans   &kp SPACE   &kp RET   &trans    &kp RALT
+                             &kp LGUI  &trans   &kp UNDER   &kp RET   &shift_left    &shift_right
                         >;
                 };
         };
